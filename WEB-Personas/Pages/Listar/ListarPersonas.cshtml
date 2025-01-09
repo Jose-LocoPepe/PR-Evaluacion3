@@ -1,0 +1,28 @@
+﻿@page
+@model MyApp.Namespace.ListarPersonasModel
+@{
+    ViewData["Title"] = "Listar Personas";
+}
+<div class="container">
+    <h1 class="display-4">Listar Personas</h1>
+    <a class="btn btn-primary" href="/Agregar/NuevaPersona">Crear Persona</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Rut</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in Model.Personas)
+            {
+                <tr>
+                    <td>@persona.Nombre</td>
+                    <td>@persona.Rut</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
