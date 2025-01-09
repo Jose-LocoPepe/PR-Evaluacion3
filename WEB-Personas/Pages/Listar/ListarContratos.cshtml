@@ -1,4 +1,35 @@
 ﻿@page
 @model MyApp.Namespace.ListarContratosModel
 @{
+    ViewData["Title"] = "Personas con Contratos Vigentes";
 }
+<div class="container">
+    <h1 class="display-4">Personas con Contratos Vigentes</h1>
+    <a class="btn btn-primary" href="/Agregar/NuevoContrato">Crear Contrato</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>RUT</th>
+            <th>Contratos</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var persona in Model.PersonasConContratos)
+        {
+            <tr>
+                <td>@persona.Nombre</td>
+                <td>@persona.Rut</td>
+                <td>
+                    <ul>
+                        @foreach (var contrato in persona.Contratos)
+                        {
+                            <li>@contrato.NumContrato - Obra: @contrato.NombreObra (Inicio: @contrato.FechaInicio.ToShortDateString())</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+    </table>
+</div>
