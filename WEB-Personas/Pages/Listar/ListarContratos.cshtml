@@ -24,7 +24,8 @@
                     <ul>
                         @foreach (var contrato in persona.Contratos)
                         {
-                            <li>@contrato.NumContrato - Obra: @contrato.NombreObra (Inicio: @contrato.FechaInicio.ToShortDateString())</li>
+                            <li>@contrato.NumContrato - Obra: @contrato.NombreObra (Inicio: @contrato.FechaInicio.ToShortDateString()) (Fin: @contrato.FechaFin?.ToShortDateString())</li>
+
                         }
                     </ul>
                 </td>
