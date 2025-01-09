@@ -16,6 +16,7 @@ namespace MyApp.Namespace
             persona.Nombre = nombre;
             persona.Rut = rut;
             context.Personas.Add(persona);
+            
             context.SaveChanges();
             Response.Redirect("/Listar/ListarPersonas");
         }
