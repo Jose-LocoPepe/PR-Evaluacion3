@@ -47,7 +47,7 @@ namespace SIS_ObrasMateriales
                         // Verificar si la obra ya está en el archivo
                         if (!obrasEnArchivo.Contains(obra.Nombre))
                         {
-                            writer.WriteLine(obra.Nombre); // Agregar obra al archivo
+                            writer.WriteLine($"{obra.Id},{obra.Nombre}"); // Agregar obra al archivo
                             exportadas++;
                         }
                     }
