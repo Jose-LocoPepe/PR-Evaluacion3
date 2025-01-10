@@ -5,7 +5,7 @@
 }
 
 <h1>Materiales para @Model.Obra.Nombre</h1>
-@if(Model.Movimientos.Count == 0)
+@if(!Model.Movimientos.Any())
 {
     <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay materiales asignados</p>
 }
@@ -40,10 +40,11 @@ else
 else
 {
 <form method="post">
-    <input type="hidden" name="id" value="@Model.Obra.Id" />
     <div class="form-group">
+        <input type="hidden" name="obraId" value="@Model.Obra.Id" />
         <label for="materialId">Material</label>
         <select class="form-control" id="materialId" name="materialId" required>
+            <option value="" disabled selected>--Seleccione un material--</option>
             @foreach (var material in Model.Materiales)
             {
                 <option value="@material.Id">@material.Nombre (Cantidad en bodega: @material.CantidadTotal)</option>

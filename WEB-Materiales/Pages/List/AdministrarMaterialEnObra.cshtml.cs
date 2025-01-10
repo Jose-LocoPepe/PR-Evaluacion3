@@ -21,14 +21,10 @@ namespace MyApp.Namespace
                 .Include(m => m.IdMaterialNavigation)
                 .ToList();
 
-            if (Obra != null)
-            {
-                Movimientos = Obra.Movimientos.ToList();
-            }
             Materiales = context.Materiales.ToList();
         }
 
-        public void OnPost(int ObraId, int materialId, int cantidad)
+        public async Task<IActionResult> OnPostAsync(int obraId, int materialId, int cantidad)
         {
             try
             {
@@ -42,33 +38,45 @@ namespace MyApp.Namespace
                 MaterialContext context = new ();
 
                 // reducir material en inventario
-                Material material = context.Materiales.Find(materialId);
+                Material material = await context.Materiales.FindAsync(materialId);
 
                 // if (material.CantidadTotal < cantidad)
                 // {
                 //     ErrorMessage = "No hay suficiente material en inventario.";
-                //     OnGet(ObraId); // Reload data
+                //     return Page();
                 // }
                 material.CantidadTotal -= cantidad;
-                // context.SaveChanges();
 
-                Movimiento movimiento = new ()
+                // if the material is not in the obra, add it
+                if (!context.Movimientos.Any(m => m.IdObra == obraId && m.IdMaterial == materialId))
                 {
-                    IdObra = ObraId,
-                    IdMaterial = materialId,
-                    Cantidad = cantidad,
-                    IdObraNavigation = context.Obras.Find(ObraId),
-                    IdMaterialNavigation = material
-                };
-                context.Movimientos.Add(movimiento);
-                context.SaveChanges();
+                    Movimiento movimiento = new ();
+                    movimiento.IdObra = obraId;
+                    movimiento.IdMaterial = materialId;
+                    movimiento.Cantidad = cantidad;       
+                    context.Movimientos.Add(movimiento);
+                }
+                else
+                {
+                    Movimiento movimiento = await context.Movimientos
+                        .Where(m => m.IdObra == obraId && m.IdMaterial == materialId)
+                        .FirstOrDefaultAsync();
+
+                    movimiento.Cantidad += cantidad;
+                }
+                await context.SaveChangesAsync();
 
                 // Response.Redirect($"/List/AdministrarMaterialEnObra?id={ObraId}");
-                Response.Redirect("/Index");
+                // Response.Redirect("/Index");
+
+                // redirect to index
+                return RedirectToPage("/Index");
+
+                // return RedirectToPage(new { id = obraId });
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"An error occurred while adding the client: {ex.Message}");
+                Console.Error.WriteLine($"An error occurred while assigning the material: {ex.Message}");
                 throw;
             }
         }
