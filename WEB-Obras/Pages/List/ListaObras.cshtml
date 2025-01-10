@@ -15,7 +15,7 @@ else
     <thead>
         <tr>
             <th>Nombre</th>
-            <th>Avance General (%)</th>
+            <th>Avance General</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -24,7 +24,7 @@ else
         {
             <tr>
                 <td>@obra.Nombre</td>
-                <td>@obra.AvanceGeneral</td>
+                <td>@Math.Round(obra.AvanceGeneral , 2) %</td>
                 <td>
                     <a asp-page="/List/AdministrarTareasEnObra" asp-route-id="@obra.Id">Administrar Tareas</a>
                 </td>

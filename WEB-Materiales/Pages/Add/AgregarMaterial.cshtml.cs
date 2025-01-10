@@ -21,7 +21,7 @@ namespace MyApp.Namespace
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"An error occurred while adding the client: {ex.Message}");
+                Console.Error.WriteLine($"An error occurred while adding the material: {ex.Message}");
                 throw;
             }
         }

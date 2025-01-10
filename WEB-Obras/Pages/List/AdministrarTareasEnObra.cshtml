@@ -1,0 +1,48 @@
+﻿@page "{id:int}"
+@model MyApp.Namespace.AdministrarTareasEnObraModel
+@{
+    ViewData["Title"] = "Tareas para la Obra";
+}
+
+<h1>Tareas para @Model.Obra.Nombre</h1>
+<hr />
+@if(!Model.Tareas.Any())
+{
+    <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay tareas asignadas</p>
+}
+else
+{
+<table class="table table-striped" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>Nombre de la Tarea</th>
+            <th>Avance (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model.Tareas)
+        {
+            <tr>
+                <td>@tarea.Nombre</td>
+                <td>@tarea.PorcentajeAvance</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+<h1>Agregar Tarea</h1>
+<form method="post">
+    <input type="hidden" name="obraId" value="@Model.Obra.Id" />
+    <div class="form-group">
+        <label for="nombre">Tarea</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+    </div>
+    <div class="form-group">
+        <label for="porcentajeAvance">Porcentaje de Avance</label>
+        <input type="number" class="form-control" id="porcentajeAvance" name="porcentajeAvance" required min="0" max="100">
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 1%">Agregar</button>
+</form>
+
+<h1>Editar Tarea</h1>
