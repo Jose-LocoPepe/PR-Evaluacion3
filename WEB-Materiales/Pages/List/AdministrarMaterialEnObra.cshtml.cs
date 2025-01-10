@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WEB_Materiales.Models;
+using Microsoft.EntityFrameworkCore;
 namespace MyApp.Namespace
 {
     public class AdministrarMaterialEnObraModel : PageModel
@@ -13,7 +14,10 @@ namespace MyApp.Namespace
             MaterialContext context = new ();
             
             Obra = context.Obras.Find(id);
-            Movimientos = context.Movimientos.Where(m => m.IdObra == id).Include(m => m.IdMaterialNavigation).ToList();
+            Movimientos = context.Movimientos
+                .Where(m => m.IdObra == id)
+                .Include(m => m.IdMaterialNavigation)
+                .ToList();
         }
     }
 }

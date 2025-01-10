@@ -1,0 +1,14 @@
+﻿@page
+@model MyApp.Namespace.CargarArchivoModel
+@{
+    ViewData["Title"] = "Cargar Archivo";
+}
+
+<h1>Cargar Archivo</h1>
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="archivo">Archivo: </label>
+        <input type="file" class="form-control-file" id="archivo" name="archivo" required>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 1%">Cargar</button>
+</form>
