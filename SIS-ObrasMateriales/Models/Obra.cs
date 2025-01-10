@@ -9,5 +9,9 @@ public partial class Obra
 
     public string Nombre { get; set; } = null!;
 
-    public virtual ICollection<Movimiento> Movimientos { get; } = new List<Movimiento>();
+    public float AvanceGeneral { get; set; }
+
+    public virtual ICollection<Contrato> Contratos { get; } = new List<Contrato>();
+
+    public virtual ICollection<Tarea> Tareas { get; } = new List<Tarea>();
 }

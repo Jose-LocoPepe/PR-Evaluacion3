@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace SIS_ObrasMateriales;
 
-public partial class Material
+public partial class Persona
 {
     public int Id { get; set; }
 
     public string Nombre { get; set; } = null!;
 
-    public int CantidadTotal { get; set; }
+    public string Rut { get; set; } = null!;
 
-    public virtual ICollection<Movimiento> Movimientos { get; } = new List<Movimiento>();
+    public virtual ICollection<Contrato> Contratos { get; } = new List<Contrato>();
 }
