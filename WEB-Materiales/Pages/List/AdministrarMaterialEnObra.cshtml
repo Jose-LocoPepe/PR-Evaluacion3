@@ -5,6 +5,7 @@
 }
 
 <h1>Materiales para @Model.Obra.Nombre</h1>
+<hr />
 @if(!Model.Movimientos.Any())
 {
     <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay materiales asignados</p>
@@ -16,7 +17,6 @@ else
         <tr>
             <th>Nombre del Material</th>
             <th>Cantidad</th>
-            <th>Acción</th>
         </tr>
     </thead>
     <tbody>
@@ -25,7 +25,6 @@ else
             <tr>
                 <td>@movimiento.IdMaterialNavigation.Nombre</td>
                 <td>@movimiento.Cantidad</td>
-                <td>Añadir | Restar</td>
             </tr>
         }
     </tbody>
@@ -55,11 +54,37 @@ else
         <label for="cantidad">Cantidad</label>
         <input type="number" class="form-control" id="cantidad" name="cantidad" required min="0">
     </div>
-    <button type="submit" class="btn btn-primary">Asignar</button>
+    <button type="submit" class="btn btn-primary" style="margin-top: 1%">Asignar</button>
 </form>
 }
 
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
     <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+<h2>Restar Material</h2>
+@if (!Model.Movimientos.Any())
+{
+    <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay materiales asignados</p>
+}
+else
+{
+<form method="post" asp-page-handler="RemoveMaterial">
+    <div class="form-group">
+        <input type="hidden" name="obraId" value="@Model.Obra.Id" />
+        <label for="materialId">Material</label>
+        <select class="form-control" id="materialId" name="materialId" required>
+            @foreach (var movimiento in Model.Movimientos)
+            {
+                <option value="@movimiento.IdMaterialNavigation.Id">@movimiento.IdMaterialNavigation.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="quantity">Cantidad</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" min="0" required />
+    </div>
+    <button type="submit" class="btn btn-danger" style="margin-top: 1%">Restar</button>
+</form>
 }

@@ -80,5 +80,34 @@ namespace MyApp.Namespace
                 throw;
             }
         }
+
+        public IActionResult OnPostRemoveMaterial(int obraId, int materialId, int quantity)
+        {
+            try
+            {
+                MaterialContext context = new ();
+
+                Movimiento movimiento = context.Movimientos
+                    .Where(m => m.IdObra == obraId && m.IdMaterial == materialId)
+                    .FirstOrDefault();
+
+                Material material =  context.Materiales.Find(materialId);
+                material.CantidadTotal += quantity;
+                movimiento.Cantidad -= quantity;
+                context.SaveChanges();
+
+                // Response.Redirect("/Index");
+                return RedirectToPage("/Index");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"An error occurred while deleting the material: {ex.Message}");
+                throw;
+            }
+        }
+
+
+
+
     }
 }
