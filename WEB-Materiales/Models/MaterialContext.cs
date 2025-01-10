@@ -15,7 +15,7 @@ public partial class MaterialContext : DbContext
     {
     }
 
-    public virtual DbSet<Material> Materials { get; set; }
+    public virtual DbSet<Material> Materiales { get; set; }
 
     public virtual DbSet<Movimiento> Movimientos { get; set; }
 

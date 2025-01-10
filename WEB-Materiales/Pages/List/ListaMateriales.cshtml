@@ -4,3 +4,30 @@
     ViewData["Title"] = "Lista de Materiales";
 }
 <h1>Lista de Materiales</h1>
+
+@if(Model.Materiales.Count == 0)
+{
+    <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay materiales registrados</p>
+}
+else
+{
+<table class="table table-striped" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var material in Model.Materiales)
+        {
+            <tr>
+                <td>@material.Nombre</td>
+                <td>@material.CantidadTotal</td>
+                <td>Agregar | Retirar</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
