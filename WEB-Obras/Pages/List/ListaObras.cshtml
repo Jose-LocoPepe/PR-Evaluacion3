@@ -1,0 +1,35 @@
+﻿@page
+@model MyApp.Namespace.ListaObrasModel
+@{
+    ViewData["Title"] = "Lista de Obras";
+}
+
+<h1>Lista de Obras</h1>
+@if(Model.Obras.Count == 0)
+{
+    <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay obras registradas</p>
+}
+else
+{
+<table class="table table-striped" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Avance General (%)</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obra in Model.Obras)
+        {
+            <tr>
+                <td>@obra.Nombre</td>
+                <td>@obra.AvanceGeneral</td>
+                <td>
+                    <a asp-page="/List/AdministrarTareasEnObra" asp-route-id="@obra.Id">Administrar Tareas</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
