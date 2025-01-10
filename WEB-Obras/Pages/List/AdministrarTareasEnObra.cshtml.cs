@@ -18,7 +18,7 @@ namespace MyApp.Namespace
                 .ToList();
         }
 
-        public void OnPost(int obraId, string nombre, float porcentajeAvance)
+        public IActionResult OnPost(int obraId, string nombre, float porcentajeAvance)
         {
             try
             {
@@ -44,7 +44,39 @@ namespace MyApp.Namespace
                 context.Tareas.Add(tarea);
                 context.SaveChanges();
 
-                Response.Redirect("/Index");
+                // Response.Redirect("/Index");
+                return RedirectToPage("/Index");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"An error occurred while adding the task: {ex.Message}");
+                throw;
+            }
+        }
+
+        public IActionResult OnPostUpdateTarea (int obraId, int tareaId, float porcentajeAvanceNuevo)
+        {
+            try
+            {
+                ObrasContext context = new ();
+
+                Obra obra = context.Obras
+                    .Include(o => o.Tareas)
+                    .FirstOrDefault(o => o.Id == obraId);
+                int totalTareas = obra.Tareas.Count();
+                float totalPorcentajeSumado = obra.Tareas.Select(t => t.PorcentajeAvance).Sum();
+                float nuevoPorcentaje = (totalPorcentajeSumado + porcentajeAvanceNuevo) / totalTareas;
+
+                obra.AvanceGeneral = nuevoPorcentaje;
+                context.Obras.Update(obra);
+
+                Tarea tarea = context.Tareas.Find(tareaId);
+                tarea.PorcentajeAvance = porcentajeAvanceNuevo;
+
+                context.Tareas.Update(tarea);
+
+                context.SaveChanges();
+                return RedirectToPage("/Index");
             }
             catch (Exception ex)
             {
