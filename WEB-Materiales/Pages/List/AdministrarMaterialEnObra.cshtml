@@ -1,8 +1,33 @@
-﻿@page
+﻿@page "{id:int}"
 @model MyApp.Namespace.AdministrarMaterialEnObraModel
 @{
-    ViewData["Title"] = "Materiales en la Obra";
+    ViewData["Title"] = "Materiales para la Obra";
 }
 
-<h1>Materiales en la Obra</h1>
-
+<h1>Materiales para @Model.Obra.Nombre</h1>
+@if(Model.Movimientos.Count == 0)
+{
+    <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay materiales asignados</p>
+}
+else
+{
+<table class="table table-striped" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr>
+            <th>Nombre del Material</th>
+            <th>Cantidad</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movimiento in Model.Movimientos)
+        {
+            <tr>
+                <td>@movimiento.IdMaterialNavigation.Nombre</td>
+                <td>@movimiento.IdMaterialNavigation.CantidadTotal</td>
+                <td>Añadir | Restar</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
