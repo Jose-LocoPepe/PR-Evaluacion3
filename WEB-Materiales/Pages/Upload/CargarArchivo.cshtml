@@ -5,10 +5,34 @@
 }
 
 <h1>Cargar Archivo</h1>
+<hr />
+
+<style>
+    .custom-file-input {
+        border: 2px solid #6c757d; /* Grey border */
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa; /* Light grey background */
+    }
+
+    .custom-file-input::file-selector-button {
+        background-color: #6c757d; /* Grey background for the button */
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .custom-file-input::file-selector-button:hover {
+        background-color: #5a6268; /* Darker grey on hover */
+    }
+</style>
+
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="archivo">Archivo: </label>
-        <input type="file" class="form-control-file" id="archivo" name="archivo" required>
+        <input type="file" class="form-control-file custom-file-input" id="archivo" name="archivo" required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 1%">Cargar</button>
 </form>

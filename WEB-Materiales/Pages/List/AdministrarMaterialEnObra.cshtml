@@ -31,3 +31,34 @@ else
     </tbody>
 </table>
 }
+
+<h2>Asignar Material</h2>
+@if (Model.Materiales.Count == 0)
+{
+    <p style="margin-top: 7%;text-align: center;font-weight: bold;color:red">No hay materiales disponibles</p>
+}
+else
+{
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Obra.Id" />
+    <div class="form-group">
+        <label for="materialId">Material</label>
+        <select class="form-control" id="materialId" name="materialId" required>
+            @foreach (var material in Model.Materiales)
+            {
+                <option value="@material.Id">@material.Nombre (Cantidad en bodega: @material.CantidadTotal)</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cantidad">Cantidad</label>
+        <input type="number" class="form-control" id="cantidad" name="cantidad" required min="0">
+    </div>
+    <button type="submit" class="btn btn-primary">Asignar</button>
+</form>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
